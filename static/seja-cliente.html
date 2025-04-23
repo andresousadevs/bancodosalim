@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seja nosso cliente - Banco do Salim</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Banco do Salim</h1>
+  </header>
+  <nav>
+    <ul>
+      <li><a href="index.html">Página Inicial</a></li>
+      <li><a href="emprestimos.html">Empréstimos</a></li>
+      <li><a href="seja-cliente.html">Seja nosso cliente</a></li>
+    </ul>
+  </nav>
+  <section id="seja-cliente">
+    <h2>Seja nosso cliente</h2>
+    <p>Junte-se a nós e aproveite os melhores serviços financeiros.</p>
+    <form>
+      <div class="form-group">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" required>
+      </div>
+      <div class="form-group">
+        <label for="email">E-mail:</label>
+        <input type="email" id="email" required>
+      </div>
+      <div class="form-group">
+        <label for="telefone">Telefone:</label>
+        <input type="tel" id="telefone" required>
+      </div>
+      <div class="form-group">
+        <label for="servico">Serviço desejado:</label>
+        <select id="servico">
+          <option>Empréstimo</option>
+          <option>Conta Bancária</option>
+          <option>Cartão de Crédito</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label><input type="checkbox"> Sou aposentado</label>
+      </div>
+      <button type="submit">Cadastrar</button>
+    </form>
+  </section>
+</body>
+</html>
