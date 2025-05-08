@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Empréstimos - Banco do Salim</title> <!-- Título específico -->
+  <link rel="stylesheet" th:href="@{/css/styles.css}"> <!-- Link CSS -->
+
+  <!-- jQuery e Script.js -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+          integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+          crossorigin="anonymous"></script>
+  <script th:src="@{/js/script.js}" defer></script>
+
+</head>
+<body>
+  <!-- Cabeçalho padrão -->
+  <header>
+    <h1>Banco do Salim</h1>
+    <!-- ======= BARRA DE NAVEGAÇÃO ATUALIZADA ======= -->
+    <nav>
+      <ul>
+        <li><a th:href="@{/}">Página Inicial</a></li>
+        <li><a th:href="@{/cartao}">Cartões</a></li> <!-- Link Adicionado -->
+        <li><a th:href="@{/seja-cliente}">Seja Nosso Cliente</a></li>
+        <!-- Marcar este link como ativo -->
+        <li><a th:href="@{/emprestimos}" class="active">Nossos Empréstimos</a></li>
+      </ul>
+    </nav>
+     <!-- ============================================== -->
+  </header>
+
+  <!-- Conteúdo principal (Permanece o mesmo que você enviou) -->
+  <main>
+    <!-- Seção de informações -->
+    <section id="info-emprestimos">
+      <h2>Nossos Empréstimos</h2>
+      <div class="emprestimos-container">
+        <div class="emprestimo">
+          <h3>Empréstimo Pessoal</h3>
+          <p>Flexibilidade para suas necessidades financeiras.</p>
+        </div>
+        <div class="emprestimo">
+          <h3>Empréstimo Consignado</h3>
+          <p>Taxas reduzidas para aposentados e servidores.</p>
+        </div>
+      </div>
+    </section>
+
+    <hr/>
+
+    <!-- Seção do formulário de solicitação -->
+    <section id="solicitacao-emprestimo">
+      <h3>Solicite seu Empréstimo</h3>
+      <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+      <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+      <form th:action="@{/emprestimos/solicitar}" method="post">
+        <div class="form-group">
+          <label for="cpfCliente">Seu CPF:</label>
+          <input type="text" id="cpfCliente" name="cpfCliente" required placeholder="000.000.000-00"/>
+          <span class="error-message"></span>
+        </div>
+        <div class="form-group">
+          <label for="tipoEmprestimo">Tipo de Empréstimo:</label>
+          <select id="tipoEmprestimo" name="tipoEmprestimo">
+            <option value="PESSOAL" selected>Pessoal</option>
+            <option value="CONSIGNADO">Consignado</option>
+          </select>
+          <span class="error-message"></span>
+        </div>
+        <div class="form-group">
+          <label for="valorSolicitado">Valor Desejado (R$):</label>
+          <input type="number" id="valorSolicitado" name="valorSolicitado" step="100" min="500" required placeholder="Ex: 5000"/>
+          <span class="error-message"></span>
+        </div>
+        <div class="form-group">
+          <label for="numeroParcelas">Parcelas:</label>
+          <input type="number" id="numeroParcelas" name="numeroParcelas" min="6" max="48" step="6" required placeholder="Ex: 12"/>
+          <span class="error-message"></span>
+        </div>
+        <button type="submit">Solicitar Empréstimo</button>
+      </form>
+    </section>
+
+    <hr/>
+
+    <!-- Seção para LISTAR/BUSCAR empréstimos -->
+    <section id="meus-emprestimos">
+        <h2>Buscar Meus Empréstimos</h2>
+        <form th:action="@{/emprestimos}" method="get" class="form-inline">
+            <div class="form-group">
+                <label for="cpfBusca">CPF:</label>
+                <input type="text" id="cpfBusca" name="cpfBusca" th:value="${cpfBuscaAtual}" placeholder="Digite o CPF"/>
+                <span class="error-message"></span>
+            </div>
+            <button type="submit">Buscar</button>
+        </form>
+        <div th:if="${errorMessageList}" class="alert alert-danger" th:text="${errorMessageList}"></div>
+        <div th:if="${infoMessage}" class="alert alert-info" th:text="${infoMessage}"></div>
+        <div th:if="${not #lists.isEmpty(emprestimosListados)}">
+            <h3>Empréstimos Encontrados:</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Valor Solicitado</th>
+                        <th>Parcelas</th>
+                        <th>Valor Parcela</th>
+                        <th>Status</th>
+                        <th>Data</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="emp : ${emprestimosListados}">
+                        <td th:text="${emp.id}"></td>
+                        <td th:text="${#numbers.formatCurrency(emp.valorSolicitado)}"></td>
+                        <td th:text="${emp.numeroParcelas}"></td>
+                        <td th:text="${#numbers.formatCurrency(emp.valorParcela)}"></td>
+                        <td th:text="${emp.status}"></td>
+                        <td th:text="${#temporals.format(emp.dataSolicitacao, 'dd/MM/yyyy')}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <br/>
+    <a th:href="@{/seja-cliente}" class="button-link">Ainda não é cliente? Cadastre-se!</a>
+  </main>
+
+  <!-- Rodapé padrão -->
+  <footer>
+      <p>© <span th:text="${#dates.year(#dates.createNow())}">ANO</span> Banco do Salim. Todos os direitos reservados.</p>
+  </footer>
+
+</body>
+</html>

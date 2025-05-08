@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartão Banco do Salim - Peça o Seu!</title> <!-- Título específico -->
+    <link rel="stylesheet" th:href="@{/css/styles.css}"> <!-- Link CSS -->
+
+    <!-- Inclusão do jQuery (via CDN) -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous"></script>
+    <!-- Inclusão do seu script.js (DEPOIS do jQuery) -->
+    <script th:src="@{/js/script.js}" defer></script>
+</head>
+<body>
+    <header>
+        <!-- Título principal -->
+        <h1>Banco do Salim</h1>
+        <!-- Navegação Principal (IMPORTANTE: Adicionar "Cartões" aqui e nas outras páginas) -->
+        <nav>
+            <ul>
+                <li><a th:href="@{/}">Página Inicial</a></li>
+                <li><a th:href="@{/cartao}" class="active">Cartões</a></li> <!-- Novo link, ativo nesta página -->
+                <li><a th:href="@{/seja-cliente}">Seja Nosso Cliente</a></li>
+                <li><a th:href="@{/emprestimos}">Nossos Empréstimos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Seção específica para solicitar o cartão -->
+        <section id="solicita-cartao">
+            <h2>Peça seu Cartão Banco do Salim</h2>
+            <p>Sem anuidade e cheio de benefícios. Comece informando seu CPF abaixo.</p>
+
+            <!-- Mensagens de Feedback (Sucesso/Erro após envio) -->
+            <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+            <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+
+            <!-- Formulário de solicitação inicial -->
+            <form th:action="@{/cartoes/solicitar}" method="post">
+                <div class="form-group">
+                    <label for="cpfCartao">CPF:</label>
+                    <input type="text" id="cpfCartao" name="cpfCartao" required placeholder="000.000.000-00" aria-label="CPF">
+                    <span class="error-message"></span> <!-- Para erros de validação JS -->
+                </div>
+
+                <!-- Campos opcionais que podem ser úteis, mas mantendo a simplicidade -->
+                <div class="form-group">
+                    <label for="nomeCartao">Nome Completo (como no CPF):</label>
+                    <input type="text" id="nomeCartao" name="nomeCartao" placeholder="Seu nome completo" aria-label="Nome Completo">
+                     <span class="error-message"></span>
+                </div>
+                 <div class="form-group">
+                    <label for="emailCartao">E-mail:</label>
+                    <input type="email" id="emailCartao" name="emailCartao" placeholder="seuemail@exemplo.com" aria-label="E-mail">
+                     <span class="error-message"></span>
+                </div>
+
+                <button type="submit">Pedir meu cartão</button>
+            </form>
+
+            <p style="font-size: 0.8em; margin-top: 15px; text-align: center; color: #666;">
+                Ao continuar, você concorda com nossa <a href="#">Política de Privacidade</a>.
+            </p>
+        </section>
+    </main>
+
+    <!-- Rodapé Padrão -->
+    <footer>
+        <p>© <span th:text="${#dates.year(#dates.createNow())}">ANO</span> Banco do Salim. Todos os direitos reservados.</p>
+    </footer>
+
+</body>
+</html>

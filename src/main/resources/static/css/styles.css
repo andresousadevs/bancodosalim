@@ -1,0 +1,464 @@
+/* src/main/resources/static/css/styles.css */
+
+/* Reset básico */
+body, h1, h2, h3, p, ul, li, form, label, input, select, button, table, th, td, img, section, header, nav, footer, main, div {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  box-sizing: border-box;
+}
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* --- Cabeçalho e Navegação --- */
+header {
+  background-color: #EC7000; /* Cor laranja "Itaú" */
+  color: white;
+  padding: 20px 0;
+  text-align: center;
+}
+
+header h1 {
+  margin-bottom: 15px;
+  font-size: 2.5em;
+}
+
+nav {
+  margin-top: 10px;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  text-align: center;
+}
+
+nav ul li {
+  display: inline-block;
+  margin: 0 15px;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+nav ul li a:hover,
+nav ul li a.active {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* --- Layout Principal e Seções --- */
+main {
+  max-width: 1000px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  border-radius: 8px;
+}
+
+section {
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #eee;
+  border-radius: 5px;
+}
+
+section h2, section h3 {
+  color: #EC7000;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+/* --- Produtos na Página Inicial --- */
+.produtos-home {
+  margin-top: 40px;
+  padding: 20px;
+  background-color: #ffffff; /* Fundo branco ou levemente diferente */
+  text-align: center;
+}
+
+.produtos-home h2 {
+  margin-bottom: 30px;
+  color: #EC7000;
+  font-size: 2em;
+}
+
+.produtos-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.produto {
+  flex-basis: calc(33.333% - 40px); /* Ajuste para 3 colunas com gap */
+  min-width: 250px;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #fdfdfd;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+}
+
+.produto:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.12);
+}
+
+/* Regra NOVA e CORRIGIDA para tamanho fixo das imagens na home */
+.produto img {
+  width: 250px;           /* Define a largura fixa desejada */
+  height: 140px;          /* Define a altura fixa desejada */
+  object-fit: cover;      /* Redimensiona/corta para preencher, sem distorcer */
+  display: block;         /* Para margin auto funcionar corretamente */
+  margin: 0 auto 15px auto; /* Centraliza horizontalmente, margem inferior 15px */
+  border-radius: 5px;
+  border: 1px solid #eee;
+}
+
+.produto h3 {
+  margin-bottom: 10px;
+  font-size: 1.4em;
+  color: #333;
+}
+
+.produto p {
+  font-size: 0.95em;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.button-link-inline {
+  display: inline-block;
+  background-color: #007bff;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 0.9em;
+  transition: background-color 0.3s ease;
+}
+.button-link-inline:hover {
+   background-color: #0056b3;
+}
+
+/* --- Empréstimos (info cards) --- */
+#info-emprestimos .emprestimos-container {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+#info-emprestimos .emprestimo {
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 5px;
+  text-align: center;
+  flex-basis: 45%;
+  min-width: 250px;
+}
+
+#info-emprestimos .emprestimo h3 {
+   color: #333;
+   margin-bottom: 10px;
+}
+
+
+/* --- Formulários --- */
+.form-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="tel"],
+.form-group input[type="number"],
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
+}
+
+.form-group input:focus, .form-group select:focus {
+   border-color: #EC7000;
+   outline: none;
+   box-shadow: 0 0 5px rgba(236, 112, 0, 0.5);
+}
+
+/* Mensagens de Erro */
+.error-message {
+  color: #d9534f;
+  font-size: 0.85em;
+  display: block;
+  margin-top: 5px;
+  min-height: 1em;
+}
+
+/* Botões */
+button[type="submit"], .button-link {
+  display: inline-block;
+  background-color: #EC7000;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  font-size: 1.1em;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+button[type="submit"]:hover, .button-link:hover {
+  background-color: #cc5f00;
+}
+
+/* Form Busca Inline */
+.form-inline {
+  text-align: center; /* Centraliza o conteúdo do form inline */
+  margin-bottom: 20px;
+}
+.form-inline .form-group {
+   display: inline-block;
+   margin-right: 10px;
+   margin-bottom: 0;
+   vertical-align: bottom;
+   min-width: 200px; /* Dá um espaço mínimo para o input */
+}
+.form-inline button[type="submit"] {
+   padding: 10px 15px;
+   font-size: 1em;
+   margin-top: 0;
+   vertical-align: bottom;
+}
+
+
+/* --- Tabela de Empréstimos --- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 0.95em;
+}
+
+table th, table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  color: #555;
+}
+
+table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+table tr:hover {
+  background-color: #f1f1f1;
+}
+
+
+/* --- Alertas de Feedback --- */
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    text-align: left;
+}
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+.alert-info {
+    color: #0c5460;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+}
+
+/* --- Diversos --- */
+hr {
+  border: 0;
+  height: 1px;
+  background: #ddd;
+  margin: 30px 0;
+}
+
+footer {
+  text-align: center;
+  margin-top: 40px;
+  padding: 20px;
+  background-color: #e0e0e0;
+  color: #555;
+  font-size: 0.9em;
+}
+
+/* --- Responsividade --- */
+@media (max-width: 992px) {
+  .produto {
+    flex-basis: calc(50% - 30px); /* 2 colunas em telas médias */
+  }
+}
+
+
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 2em;
+  }
+
+  nav ul li {
+    display: block;
+    margin: 10px 0;
+  }
+
+  main {
+    width: 95%;
+    padding: 15px;
+  }
+
+  #info-emprestimos .emprestimos-container {
+    flex-direction: column;
+  }
+
+   .form-inline .form-group {
+      display: block;
+      margin-right: 0;
+      margin-bottom: 10px;
+      min-width: unset; /* Remove min-width em telas pequenas */
+   }
+    .form-inline button[type="submit"] {
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+  .produto {
+    flex-basis: 90%; /* 1 coluna em telas pequenas */
+  }
+   .produtos-container {
+        gap: 20px;
+   }
+}
+
+
+/* Em styles.css */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.form-inline label.sr-only + input { /* Pequeno ajuste se a label some */
+    /* Pode precisar de ajustes adicionais dependendo do resto do CSS */
+}
+#login-section .form-inline button[type="submit"] { /* Ajusta botão login inline */
+    margin-top: 0;
+    vertical-align: bottom;
+    padding: 10px 20px; /* Deixa ele um pouco maior */
+}
+
+/* Adicione ao seu styles.css */
+
+#login-section {
+  padding: 20px;
+  border: 1px solid #eee;
+  background-color: #fdfdfd;
+  border-radius: 8px;
+  margin-bottom: 30px;
+}
+
+#login-section h2 {
+   margin-bottom: 20px;
+}
+
+#dados-cliente p {
+  margin-bottom: 10px;
+  font-size: 1.1em;
+}
+
+#operacoes-conta h2 {
+  margin-bottom: 20px;
+}
+
+.operacoes-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.operacao-card {
+  flex-basis: calc(48% - 20px); /* Tenta 2 colunas com espaço */
+  min-width: 280px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+   text-align: left; /* Alinha conteúdo à esquerda dentro do card */
+}
+.operacao-card h3 {
+  text-align: center;
+   color: #333; /* Tira o laranja do H3 dentro dos cards */
+   margin-bottom: 15px;
+}
+.operacao-card .form-group label {
+  font-weight: normal; /* Deixa a label normal dentro do card */
+}
+.operacao-card button[type="submit"] {
+   width: 100%; /* Botão ocupa largura total do card */
+}
+
+/* Responsividade para cards de operação */
+@media (max-width: 768px) {
+    .operacao-card {
+        flex-basis: 95%; /* Uma coluna em telas menores */
+    }
+}

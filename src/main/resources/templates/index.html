@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banco do Salim</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"> <!-- Path/nome do CSS -->
+
+    <!-- Inclusão do jQuery (via CDN) -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous"></script>
+    <!-- Inclusão do seu script.js (DEPOIS do jQuery) -->
+    <script th:src="@{/js/script.js}" defer></script>
+</head>
+<body>
+    <header>
+        <!-- Título principal do banco -->
+        <h1>Banco do Salim</h1>
+        <!-- Navegação principal (com link Cartões) -->
+        <nav>
+            <ul>
+                <li><a th:href="@{/}" class="active">Página Inicial</a></li> <!-- Marcando Home como ativa aqui -->
+                <li><a th:href="@{/cartao}">Cartões</a></li>
+                <li><a th:href="@{/seja-cliente}">Seja Nosso Cliente</a></li>
+                <li><a th:href="@{/emprestimos}">Nossos Empréstimos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Mensagem de boas-vindas -->
+        <p style="text-align: center; font-size: 1.2em; margin-bottom: 30px;">
+             Aqui você encontra as melhores soluções financeiras para o seu dia a dia e para realizar seus sonhos!
+        </p>
+
+        <!-- =============================== -->
+        <!-- ========= SEÇÃO DE LOGIN (ÚNICA) ========= -->
+        <section id="login-section">
+            <h2>Acesse sua Conta</h2>
+
+            <!-- Mensagem de erro de login vinda do Controller -->
+            <div th:if="${loginError}" class="alert alert-danger" th:text="${loginError}"></div>
+
+            <form th:action="@{/login}" method="post" class="form-inline" style="justify-content: center;">
+                <div class="form-group">
+                    <label for="cpfLogin" class="sr-only">CPF:</label>
+                    <input type="text" id="cpfLogin" name="cpf" required placeholder="Seu CPF (000.000.000-00)" aria-label="CPF">
+                    <span class="error-message"></span> <!-- Span para erros JS -->
+                </div>
+                <div class="form-group">
+                    <label for="senhaLogin" class="sr-only">Senha:</label>
+                    <input type="password" id="senhaLogin" name="senha" required placeholder="Sua Senha" aria-label="Senha">
+                    <span class="error-message"></span> <!-- Span para erros JS -->
+                </div>
+                <button type="submit" style="margin-left: 10px;">Entrar</button>
+            </form>
+            <p style="text-align: center; margin-top: 10px;">
+                Ainda não tem conta? <a th:href="@{/seja-cliente}">Cadastre-se aqui!</a>
+            </p>
+        </section>
+
+        <hr style="margin-top: 40px; margin-bottom: 40px;"> <!-- Divisor visual -->
+        <!-- ========= FIM SEÇÃO DE LOGIN ========== -->
+        <!-- =============================== -->
+
+
+        <!-- ========= INÍCIO SEÇÃO DE PRODUTOS ========== -->
+        <section class="produtos-home">
+            <h2>Nossos Produtos</h2>
+            <div class="produtos-container"> <!-- Container Flexbox -->
+
+                <!-- Produto: Cartões -->
+                <div class="produto">
+                     <a th:href="@{/cartao}" class="produto-link">
+                         <img th:src="@{/images/cartoes.jpg}" alt="Cartões Banco do Salim">
+                         <h3>Cartões</h3>
+                         <p>O cartão ideal para suas compras, viagens e benefícios exclusivos.</p>
+                     </a>
+                      <a th:href="@{/cartao}" class="button-link-inline" style="margin-top: 10px;">Peça já o seu</a>
+                </div>
+
+                <!-- Produto: Contas -->
+                <div class="produto">
+                    <a th:href="@{/seja-cliente}" class="produto-link">
+                        <img th:src="@{/images/contas.jpg}" alt="Contas Banco do Salim">
+                        <h3>Contas</h3>
+                        <p>Abra sua conta corrente ou poupança com ótimas condições. Clique aqui!</p>
+                    </a>
+                    <a th:href="@{/seja-cliente}" class="button-link-inline" style="margin-top: 10px;">Abra sua Conta</a>
+                </div>
+
+                <!-- Produto: Empréstimos -->
+                <div class="produto">
+                    <a th:href="@{/emprestimos}" class="produto-link">
+                        <img th:src="@{/images/emprestimo.jpg}" alt="Empréstimos Banco do Salim">
+                        <h3>Empréstimos</h3>
+                        <p>Crédito rápido e fácil para realizar seus projetos e organizar suas finanças.</p>
+                    </a>
+                    <a th:href="@{/emprestimos}" class="button-link-inline" style="margin-top: 10px;">Saiba Mais</a>
+                </div>
+
+            </div> <!-- Fim .produtos-container -->
+        </section> <!-- Fim .produtos-home -->
+        <!-- ========= FIM SEÇÃO DE PRODUTOS ========== -->
+
+    </main>
+
+    <!-- Rodapé padrão -->
+    <footer>
+        <p>© <span th:text="${#dates.year(#dates.createNow())}">2024</span> Banco do Salim. Todos os direitos reservados.</p>
+    </footer>
+
+</body>
+</html>

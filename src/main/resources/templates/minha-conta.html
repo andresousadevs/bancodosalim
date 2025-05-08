@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Conta - Banco do Salim</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous"></script>
+    <script th:src="@{/js/script.js}" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Banco do Salim</h1>
+         <nav>
+            <ul>
+                <li><a th:href="@{/}">Página Inicial</a></li>
+                <li><a th:href="@{/cartao}">Cartões</a></li>
+                <li><a th:href="@{/seja-cliente}">Seja Nosso Cliente</a></li>
+                <li><a th:href="@{/emprestimos}">Nossos Empréstimos</a></li>
+                <li><a th:href="@{/minha-conta}" class="active">Minha Conta</a></li>
+                <li><a th:href="@{/logout}" style="color: #ffdddd;">Sair</a></li> <!-- Link de Logout -->
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Verifica se o objeto 'cliente' (passado pelo model) existe -->
+        <div th:if="${cliente != null}">
+            <section id="dados-cliente">
+                <h2>Olá, <span th:text="${cliente.nomeCompleto}">Nome do Cliente</span>!</h2>
+                <p>Seu Saldo Atual: <strong style="font-size: 1.4em; color: #28a745;">R$ <span th:text="${#numbers.formatDecimal(cliente.saldo, 1, 'POINT', 2, 'COMMA')}">0,00</span></strong></p>
+                <p>CPF: <span th:text="${cliente.cpf}">000.000.000-00</span></p>
+                <!-- Outros dados do cliente se desejar -->
+            </section>
+
+            <hr>
+
+            <!-- Seção de Operações (Depósito/Saque) -->
+            <section id="operacoes-conta">
+                 <h2>Operações</h2>
+
+                 <!-- Mensagens de Feedback de Operações -->
+                <div th:if="${operacaoSucesso}" class="alert alert-success" th:text="${operacaoSucesso}"></div>
+                <div th:if="${operacaoErro}" class="alert alert-danger" th:text="${operacaoErro}"></div>
+
+
+                <div class="operacoes-container" style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px;">
+
+                    <!-- Formulário de Depósito -->
+                    <div class="operacao-card" style="flex-basis: 45%; min-width: 280px; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
+                        <h3>Depositar Dinheiro</h3>
+                        <form th:action="@{/depositar}" method="post" id="formDeposito">
+                             <div class="form-group">
+                                <label for="valorDeposito">Valor a Depositar (R$):</label>
+                                <input type="number" step="0.01" min="0.01" id="valorDeposito" name="valor" required placeholder="Ex: 50.00">
+                                <span class="error-message"></span>
+                             </div>
+                             <button type="submit">Confirmar Depósito</button>
+                        </form>
+                    </div>
+
+                     <!-- Formulário de Saque -->
+                     <div class="operacao-card" style="flex-basis: 45%; min-width: 280px; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
+                        <h3>Sacar Dinheiro</h3>
+                        <form th:action="@{/sacar}" method="post" id="formSaque">
+                             <div class="form-group">
+                                <label for="valorSaque">Valor a Sacar (R$):</label>
+                                <input type="number" step="0.01" min="0.01" id="valorSaque" name="valor" required placeholder="Ex: 20.00">
+                                 <span class="error-message"></span>
+                             </div>
+                              <button type="submit">Confirmar Saque</button>
+                        </form>
+                     </div>
+                 </div>
+            </section>
+
+             <!-- Seção de Empréstimos do Cliente (Opcional - pode reaproveitar tabela) -->
+             <section id="meus-emprestimos-conta" style="margin-top: 30px;">
+                 <h3>Seus Empréstimos Solicitados</h3>
+                 <div th:if="${#lists.isEmpty(cliente.emprestimos)}">
+                     <p>Você ainda não solicitou empréstimos.</p>
+                     <a th:href="@{/emprestimos}" class="button-link">Solicitar Empréstimo</a>
+                 </div>
+                 <div th:if="${not #lists.isEmpty(cliente.emprestimos)}">
+                     <table>
+                         <!-- Copie a thead da emprestimos.html -->
+                          <thead>
+                              <tr>
+                                  <th>ID</th>
+                                  <th>Valor Solicitado</th>
+                                  <th>Parcelas</th>
+                                  <th>Valor Parcela</th>
+                                  <th>Status</th>
+                                  <th>Data</th>
+                              </tr>
+                          </thead>
+                         <tbody>
+                            <!-- Itera sobre os empréstimos DO cliente -->
+                             <tr th:each="emp : ${cliente.emprestimos}">
+                                 <td th:text="${emp.id}"></td>
+                                 <td th:text="${#numbers.formatCurrency(emp.valorSolicitado)}"></td>
+                                 <td th:text="${emp.numeroParcelas}"></td>
+                                 <td th:text="${#numbers.formatCurrency(emp.valorParcela)}"></td>
+                                 <td th:text="${emp.status}"></td>
+                                 <td th:text="${#temporals.format(emp.dataSolicitacao, 'dd/MM/yyyy')}"></td>
+                             </tr>
+                         </tbody>
+                     </table>
+                 </div>
+             </section>
+
+        </div>
+
+        <!-- Mensagem caso tente acessar sem estar logado (se o controller redirecionar) -->
+        <div th:if="${cliente == null}">
+             <p class="alert alert-danger">Você precisa estar logado para acessar esta página.</p>
+             <a th:href="@{/}" class="button-link">Ir para Login</a>
+        </div>
+    </main>
+
+    <footer>
+         <p>© <span th:text="${#dates.year(#dates.createNow())}">ANO</span> Banco do Salim. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>
